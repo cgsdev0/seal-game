@@ -35,14 +35,14 @@ transform = Transform3D(-8.742277e-10, 0, 0.019999998, 0, 0.02, 0, -0.019999998,
 
 [node name="Front" type="RayCast3D" parent="Node3D/CharacterBody3D" unique_id=8579592]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5198517, 0.49121475, 0)
-target_position = Vector3(0, -2, 0)
+target_position = Vector3(0, -5, 0)
 
 [node name="Back" type="RayCast3D" parent="Node3D/CharacterBody3D" unique_id=130774167]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8771515, 0.49121475, 0)
-target_position = Vector3(0, -2, 0)
+target_position = Vector3(0, -5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Node3D/CharacterBody3D" unique_id=371293126]
-transform = Transform3D(0.70381755, 0.15012108, -0.6943374, 0, 0.9774159, 0.21132483, 0.71038073, -0.14873411, 0.6879224, -1.8832397, 0.78261566, 1.8658371)
+transform = Transform3D(-4.183921e-08, 0.28952748, -0.9571696, 1.2655646e-08, 0.9571697, 0.28952745, 0.9999999, 0, -4.371138e-08, -2.7388916, 1.0705299, 0)
 
 [node name="level" parent="." unique_id=1652248196 instance=ExtResource("3_h2yge")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
