@@ -1,14 +1,49 @@
 [gd_scene format=3 uid="uid://cqow47bch5ocs"]
 
-[ext_resource type="Script" uid="uid://mf66bxpxm1ae" path="res://scripts/player.gd" id="1_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bp5cnnvtjnker" path="res://scripts/seal.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://crg0o4r8qpmni" path="res://models/Seal.glb" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bdldocvx7jbc" path="res://level.tscn" id="3_h2yge"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_h2yge"]
+sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
+
+[sub_resource type="Environment" id="Environment_1bvp3"]
+background_mode = 2
+sky = SubResource("Sky_h2yge")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h2yge"]
+radius = 0.73695815
 
 [node name="Node2D" type="Node" unique_id=422408999]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1727476714]
-position = Vector2(161, 141)
-script = ExtResource("1_0xm2m")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2049377742]
+environment = SubResource("Environment_1bvp3")
 
-[node name="Icon" type="Sprite2D" parent="CharacterBody2D" unique_id=1138456137]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_ig7tw")
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2051674146]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Node3D" type="Node3D" parent="." unique_id=2115022067]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="Node3D" unique_id=1144898859]
+floor_stop_on_slope = false
+floor_max_angle = 0.0
+floor_snap_length = 0.0
+script = ExtResource("1_h2yge")
+
+[node name="Seal" parent="Node3D/CharacterBody3D" unique_id=695714775 instance=ExtResource("1_ig7tw")]
+transform = Transform3D(-0.0051763807, 0, 0.019318515, 0, 0.02, 0, -0.019318515, 0, -0.0051763807, 105.78951, 62.270584, 66.20309)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/CharacterBody3D" unique_id=1398493907]
+transform = Transform3D(1.13133405e-08, -1.0000001, -4.2221963e-08, -0.25881904, -4.371139e-08, 0.9659258, -0.96592593, 0, -0.25881907, 105.94332, 62.368237, 66.20309)
+shape = SubResource("SphereShape3D_h2yge")
+
+[node name="Camera3D" type="Camera3D" parent="Node3D/CharacterBody3D" unique_id=371293126]
+transform = Transform3D(0.258819, 0, -0.9659259, 0, 1, 0, 0.9659259, 0, 0.258819, 102.73295, 62.698425, 66.80048)
+
+[node name="level" parent="." unique_id=1652248196 instance=ExtResource("3_h2yge")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
