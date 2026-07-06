@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 RCadeInput="*uid://ci44fyk4upc0u"
+Events="*uid://cusfqdk06qtmu"
 
 [debug_draw_3d]
 

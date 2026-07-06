@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://clsdfvwnpexxq"]
+
+[ext_resource type="PackedScene" uid="uid://bykeeoqlcbuuw" path="res://models/race_flag.glb" id="1_h44bg"]
+[ext_resource type="Script" uid="uid://d4mxkdu8ybh18" path="res://scripts/race_flag.gd" id="2_xopcf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aw8xe"]
+size = Vector3(1, 22.013489, 33.735382)
+
+[node name="race_flag" unique_id=1738084618 instance=ExtResource("1_h44bg")]
+script = ExtResource("2_xopcf")
+
+[node name="BeginFlag_Cube_002" parent="." index="0" unique_id=880392168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.5, 0)
+
+[node name="Area3D" type="Area3D" parent="." index="1" unique_id=1506396710]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1822130424]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.506744, -0.25630188)
+shape = SubResource("BoxShape3D_aw8xe")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

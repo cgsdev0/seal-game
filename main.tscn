@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cqow47bch5ocs"]
 
 [ext_resource type="PackedScene" uid="uid://xr5m8s3nyain" path="res://seal.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://e6275iwwjmhq" path="res://game_over.gd" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://clsdfvwnpexxq" path="res://race_flag.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bdldocvx7jbc" path="res://level.tscn" id="3_h2yge"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
@@ -40,7 +42,9 @@ size_flags_horizontal = 3
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Control/HBoxContainer/SubViewportContainer" unique_id=99343489]
+handle_input_locally = false
 size = Vector2i(158, 240)
+render_target_update_mode = 4
 
 [node name="Seal" parent="Control/HBoxContainer/SubViewportContainer/SubViewport" unique_id=1566451631 instance=ExtResource("1_0xm2m")]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 152.10204, 58.933136, 56.289448)
@@ -51,20 +55,51 @@ size_flags_horizontal = 3
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Control/HBoxContainer/SubViewportContainer2" unique_id=828171214]
+handle_input_locally = false
 size = Vector2i(158, 240)
+render_target_update_mode = 4
 
 [node name="Seal2" parent="Control/HBoxContainer/SubViewportContainer2/SubViewport" unique_id=1987406193 instance=ExtResource("1_0xm2m")]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 152.06741, 59.113186, 58.134693)
 player = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=2087712642]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_1bvp3")
+
+[node name="Label" type="Label" parent="Control/ColorRect" unique_id=1128799715]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -44.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2049377742]
 environment = SubResource("Environment_1bvp3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2051674146]
 transform = Transform3D(-0.8660254, -0.43301278, 0.24999999, 0.47280344, -0.87186104, 0.12773117, 0.16265604, 0.22881931, 0.9597837, 0, 0, 0)
+light_energy = 0.6
 shadow_enabled = true
+shadow_opacity = 0.54
 
 [node name="Node3D" type="Node3D" parent="." unique_id=873933721]
 
 [node name="level" parent="Node3D" unique_id=1652248196 instance=ExtResource("3_h2yge")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="race_flag" parent="Node3D" unique_id=1738084618 instance=ExtResource("3_1bvp3")]
+transform = Transform3D(0.07374576, 0, 0.06753934, 0, 0.1, 0, -0.06753934, 0, 0.07374576, -22.74632, -0.6029892, 1.3957207)

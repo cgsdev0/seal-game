@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://bp5cnnvtjnker" path="res://scripts/seal.gd" id="1_or4ip"]
 [ext_resource type="PackedScene" uid="uid://crg0o4r8qpmni" path="res://models/Seal.glb" id="2_mngyh"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aw8xe"]
+height = 2.4978027
+
 [node name="Seal" type="Node3D" unique_id=1566451631]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 script = ExtResource("1_or4ip")
@@ -20,3 +23,9 @@ target_position = Vector3(0, -5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1913988027]
 transform = Transform3D(-4.183921e-08, 0.28952748, -0.9571696, 1.2655646e-08, 0.9571697, 0.2895275, 0.9999999, 1.7763566e-15, -4.3711385e-08, -2.7388916, 1.0705299, 0)
+
+[node name="Area3D" type="Area3D" parent="." unique_id=2024726017]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=790559330]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -0.019897465, 8.697455e-10, 0)
+shape = SubResource("CapsuleShape3D_aw8xe")

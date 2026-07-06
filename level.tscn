@@ -2,4 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://brd826ldn3aqj" path="res://models/level.glb" id="1_u52ul"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
+albedo_color = Color(0, 0.4939217, 0.86929476, 1)
+
 [node name="level" unique_id=1652248196 instance=ExtResource("1_u52ul")]
+
+[node name="Plane" parent="." index="1" unique_id=1017217119]
+surface_material_override/0 = SubResource("StandardMaterial3D_0xm2m")
