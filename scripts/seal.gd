@@ -3,6 +3,7 @@ extends Node3D
 var velocity = Vector3.ZERO
 var gravity = Vector3.DOWN
 var on_ground = false
+@onready var start_position = global_position
 
 @export var MAX_SPEED = 10.0
 @export var STEERING_STRENGTH = 5.0
@@ -53,11 +54,7 @@ func _physics_process(delta: float) -> void:
 		velocity += gravity * delta
 
 
-	var dir
-	if player == 1:
-		dir = Input.get_axis("p1_left", "p1_right")
-	elif player == 2:
-		dir = Input.get_axis("p2_left", "p2_right")
+	var dir = Input.get_axis("p%d_left" % player, "p%d_right" % player)
 	velocity += global_basis.z * dir * delta * STEERING_STRENGTH
 
 	velocity = velocity.limit_length(MAX_SPEED)
@@ -76,3 +73,8 @@ func _physics_process(delta: float) -> void:
 
 		var angle = atan(h / a)
 		$Seal.rotation.x = angle
+
+func _input(event):
+	if event.is_action_pressed("p%d_b" % player):
+		global_position = start_position
+		velocity = Vector3.ZERO

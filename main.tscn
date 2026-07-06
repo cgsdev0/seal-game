@@ -64,7 +64,6 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 152.06741, 59
 player = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=2087712642]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -84,7 +83,8 @@ offset_top = -44.0
 offset_bottom = 44.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 46
+text = "Player 1 Wins"
 horizontal_alignment = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2049377742]

@@ -6,6 +6,9 @@ func _ready():
 
 
 func on_winner(area):
+	if visible:
+		return
+
 	show()
 	$Label.text = "Player " + str(area.get_parent().player) + " wins!"
 
