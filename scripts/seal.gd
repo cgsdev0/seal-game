@@ -1,31 +1,48 @@
-extends CharacterBody3D
+extends Node3D
 
+var velocity = Vector3.ZERO
+var gravity = Vector3.DOWN
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
-
+@export var MAX_SPEED = 5.0
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+	var front = 2.0
+	var normal = []
+	if $Front.is_colliding():
+		front = ($Front.global_position - $Front.get_collision_point()).y
+		normal.append($Front.get_collision_normal())
+	var back = 2.0
+	if $Back.is_colliding():
+		back = ($Back.global_position - $Back.get_collision_point()).y
+		normal.append($Back.get_collision_normal())
+	
+	var avg = Vector3.ZERO
+	for n in normal:
+		avg += n
+	if normal.size():
+		avg /= normal.size()
+		
+	DebugDraw3D.draw_arrow(global_position, global_position + avg, Color.RED, 0.1)
+	var right = avg.cross(Vector3.DOWN)
+	var down = right.cross(avg) * 5.0
+	velocity += down * delta
+	DebugDraw3D.draw_arrow(global_position, global_position + down, Color.BLUE, 0.1)
+	if  front > 1.0 || back > 1.0:
+		velocity += gravity * delta
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	move_and_slide()
-	#var collision = move_and_collide(velocity, true)
-	#global_position += velocity * delta
-	#print(collision)
+		velocity.y = 0.0
+	
+	var dir = Input.get_axis("p1_left", "p1_right")
+	velocity -= right * dir * delta * 10.0
+		
+	velocity = velocity.limit_length(MAX_SPEED)
+	
+	
+	
+	DebugDraw3D.draw_arrow(global_position, global_position + velocity, Color.GREEN, 0.1)
+	var v_proj = Vector3(velocity.x, 0.0, velocity.z)
+	if v_proj != Vector3.ZERO:
+		look_at(global_position + v_proj, Vector3.UP, true)
+		rotation.y -= PI / 2.0
+	
+	global_position += velocity * delta
