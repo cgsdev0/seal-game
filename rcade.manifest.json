@@ -1,0 +1,21 @@
+{
+  "$schema": "https://rcade.dev/manifest.schema.json",
+  "name": "seal-game",
+  "display_name": "Grendel The Seal",
+  "description": "optional",
+  "visibility": "public",
+  "authors": [
+    {
+      "display_name": "sarah"
+    },
+    {
+      "display_name": "dylan"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "@rcade/input-classic",
+      "version": "1.0.0"
+    }
+  ]
+}
