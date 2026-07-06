@@ -6,14 +6,15 @@ var on_ground = false
 
 @export var MAX_SPEED = 10.0
 @export var STEERING_STRENGTH = 5.0
+@export var player = 1
 
 func _physics_process(delta: float) -> void:
-	var front = 2.0
+	var front = $Front.target_position.length()
 	var normal = []
 	if $Front.is_colliding():
 		front = ($Front.global_position - $Front.get_collision_point()).y
 		normal.append($Front.get_collision_normal())
-	var back = 2.0
+	var back = $Back.target_position.length()
 	if $Back.is_colliding():
 		back = ($Back.global_position - $Back.get_collision_point()).y
 		normal.append($Back.get_collision_normal())
@@ -32,7 +33,7 @@ func _physics_process(delta: float) -> void:
 		velocity += down * delta
 		DebugDraw3D.draw_arrow(global_position, global_position + down, Color.BLUE, 0.1)
 
-	if normal.size() == 2:
+	if normal.size() >= 1:
 		var front_offset = front - 1
 		var back_offset = back - 1
 
@@ -52,12 +53,14 @@ func _physics_process(delta: float) -> void:
 		velocity += gravity * delta
 
 
-	var dir = Input.get_axis("p1_left", "p1_right")
+	var dir
+	if player == 1:
+		dir = Input.get_axis("p1_left", "p1_right")
+	elif player == 2:
+		dir = Input.get_axis("p2_left", "p2_right")
 	velocity += global_basis.z * dir * delta * STEERING_STRENGTH
 
 	velocity = velocity.limit_length(MAX_SPEED)
-
-
 
 	DebugDraw3D.draw_arrow(global_position, global_position + velocity, Color.GREEN, 0.1)
 	var v_proj = Vector3(velocity.x, 0.0, velocity.z)
@@ -66,3 +69,10 @@ func _physics_process(delta: float) -> void:
 		rotation.y -= PI / 2.0
 
 	global_position += velocity * delta
+
+	if on_ground and normal.size() == 2:
+		var h = abs(front - back)
+		var a = abs($Front.position.x - $Back.position.x)
+
+		var angle = atan(h / a)
+		$Seal.rotation.x = angle

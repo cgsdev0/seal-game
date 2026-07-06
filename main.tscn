@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cqow47bch5ocs"]
 
-[ext_resource type="Script" uid="uid://bp5cnnvtjnker" path="res://scripts/seal.gd" id="1_h2yge"]
-[ext_resource type="PackedScene" uid="uid://crg0o4r8qpmni" path="res://models/Seal.glb" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://xr5m8s3nyain" path="res://seal.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bdldocvx7jbc" path="res://level.tscn" id="3_h2yge"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
@@ -12,10 +11,51 @@ ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
 
 [sub_resource type="Environment" id="Environment_1bvp3"]
-background_mode = 2
+background_mode = 1
 sky = SubResource("Sky_h2yge")
+ambient_light_source = 2
+ambient_light_color = Color(0.79836637, 0.7983663, 0.7983663, 1)
 
 [node name="Node2D" type="Node" unique_id=422408999]
+
+[node name="Control" type="Control" parent="." unique_id=344989134]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1090674158]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/HBoxContainer" unique_id=42703365]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Control/HBoxContainer/SubViewportContainer" unique_id=99343489]
+size = Vector2i(158, 240)
+
+[node name="Seal" parent="Control/HBoxContainer/SubViewportContainer/SubViewport" unique_id=1566451631 instance=ExtResource("1_0xm2m")]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 152.10204, 58.933136, 56.289448)
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/HBoxContainer" unique_id=1858601546]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Control/HBoxContainer/SubViewportContainer2" unique_id=828171214]
+size = Vector2i(158, 240)
+
+[node name="Seal2" parent="Control/HBoxContainer/SubViewportContainer2/SubViewport" unique_id=1987406193 instance=ExtResource("1_0xm2m")]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 152.06741, 59.113186, 58.134693)
+player = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2049377742]
 environment = SubResource("Environment_1bvp3")
@@ -24,25 +64,7 @@ environment = SubResource("Environment_1bvp3")
 transform = Transform3D(-0.8660254, -0.43301278, 0.24999999, 0.47280344, -0.87186104, 0.12773117, 0.16265604, 0.22881931, 0.9597837, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Node3D" type="Node3D" parent="." unique_id=2115022067]
+[node name="Node3D" type="Node3D" parent="." unique_id=873933721]
 
-[node name="CharacterBody3D" type="Node3D" parent="Node3D" unique_id=822947859]
-transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 158.55455, 61.676098, 55.139175)
-script = ExtResource("1_h2yge")
-
-[node name="Seal" parent="Node3D/CharacterBody3D" unique_id=695714775 instance=ExtResource("1_ig7tw")]
-transform = Transform3D(-8.742277e-10, 0, 0.019999998, 0, 0.02, 0, -0.019999998, 0, -8.742277e-10, 0, 0, 0)
-
-[node name="Front" type="RayCast3D" parent="Node3D/CharacterBody3D" unique_id=8579592]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5198517, 0.49121475, 0)
-target_position = Vector3(0, -5, 0)
-
-[node name="Back" type="RayCast3D" parent="Node3D/CharacterBody3D" unique_id=130774167]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8771515, 0.49121475, 0)
-target_position = Vector3(0, -5, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Node3D/CharacterBody3D" unique_id=371293126]
-transform = Transform3D(-4.183921e-08, 0.28952748, -0.9571696, 1.2655646e-08, 0.9571697, 0.28952745, 0.9999999, 0, -4.371138e-08, -2.7388916, 1.0705299, 0)
-
-[node name="level" parent="." unique_id=1652248196 instance=ExtResource("3_h2yge")]
+[node name="level" parent="Node3D" unique_id=1652248196 instance=ExtResource("3_h2yge")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

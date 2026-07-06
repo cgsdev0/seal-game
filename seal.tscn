@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://xr5m8s3nyain"]
+
+[ext_resource type="Script" uid="uid://bp5cnnvtjnker" path="res://scripts/seal.gd" id="1_or4ip"]
+[ext_resource type="PackedScene" uid="uid://crg0o4r8qpmni" path="res://models/Seal.glb" id="2_mngyh"]
+
+[node name="Seal" type="Node3D" unique_id=1566451631]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+script = ExtResource("1_or4ip")
+
+[node name="Seal" parent="." unique_id=1823385754 instance=ExtResource("2_mngyh")]
+transform = Transform3D(-8.742277e-10, 0, 0.019999998, 0, 0.02, 0, -0.019999998, 0, -8.742277e-10, 0, 0, 0)
+
+[node name="Front" type="RayCast3D" parent="." unique_id=456574086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5200043, 0.75, 0)
+target_position = Vector3(0, -5, 0)
+
+[node name="Back" type="RayCast3D" parent="." unique_id=647679375]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8769989, 0.75, 0)
+target_position = Vector3(0, -5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1913988027]
+transform = Transform3D(-4.183921e-08, 0.28952748, -0.9571696, 1.2655646e-08, 0.9571697, 0.2895275, 0.9999999, 1.7763566e-15, -4.3711385e-08, -2.7388916, 1.0705299, 0)
