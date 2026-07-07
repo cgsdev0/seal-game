@@ -21,12 +21,16 @@ func _ready():
 
 func _on_start():
 	started = true
-	velocity = global_basis.x * 2
+	velocity = global_basis.x * 3
 
 func _physics_process(delta: float) -> void:
 
+	$Camera3D.position.x = move_toward(
+		$Camera3D.position.x, lerp(-2.4, -3.6, velocity.length() / MAX_SPEED), delta * 0.25)
 	dir = move_toward(dir, Input.get_axis("p%d_left" % player, "p%d_right" % player), delta * 3)
-	$Seal.rotation.z = dir * 0.5
+	$LeftParticles.emitting = dir == 1.0 && velocity.length() > 5.0 && on_ground
+	$RightParticles.emitting = dir == -1.0 && velocity.length() > 5.0 && on_ground
+	$Seal.rotation.z = sign(dir) * sqrt(abs(dir)) * 0.5
 
 	var front = $Front.target_position.length()
 	var normal = []
@@ -81,8 +85,10 @@ func _physics_process(delta: float) -> void:
 		velocity += down * delta * 1.5
 		DebugDraw3D.draw_arrow(global_position, global_position + down, Color.BLUE, 0.1)
 
-
-	velocity += global_basis.z * dir * delta * STEERING_STRENGTH * 0.1 * velocity.length()
+	var modifier = 1.0
+	if !on_ground:
+		modifier = 0.6
+	velocity += global_basis.z * dir * delta * STEERING_STRENGTH * 0.1 * velocity.length() * modifier
 
 	velocity = velocity.limit_length(MAX_SPEED)
 
