@@ -3,6 +3,8 @@ extends MarginContainer
 var number = 4
 var boost_frame = 0
 
+var music = preload("res://sounds/brightly_fancy.mp3")
+
 func _ready():
 	hide()
 
