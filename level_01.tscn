@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://uf3mvlvcb4aq"]
+
+[ext_resource type="PackedScene" uid="uid://dr7wspjy6ap5d" path="res://models/level-01.glb" id="1_bri2l"]
+
+[node name="level-01" unique_id=930051663 instance=ExtResource("1_bri2l")]

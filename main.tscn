@@ -2,8 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://xr5m8s3nyain" path="res://seal.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://e6275iwwjmhq" path="res://game_over.gd" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://bykeeoqlcbuuw" path="res://models/race_flag.glb" id="2_7mycd"]
 [ext_resource type="PackedScene" uid="uid://clsdfvwnpexxq" path="res://race_flag.tscn" id="3_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://bdldocvx7jbc" path="res://level.tscn" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://dfjjgm18av15l" path="res://countdown.gd" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://uf3mvlvcb4aq" path="res://level_01.tscn" id="4_1bvp3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -47,7 +49,13 @@ size = Vector2i(158, 240)
 render_target_update_mode = 4
 
 [node name="Seal" parent="Control/HBoxContainer/SubViewportContainer/SubViewport" unique_id=1566451631 instance=ExtResource("1_0xm2m")]
-transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 152.10204, 58.933136, 56.289448)
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, -73, 40, -92.20728)
+
+[node name="race_flag" parent="Control/HBoxContainer/SubViewportContainer/SubViewport" unique_id=1738084618 instance=ExtResource("2_7mycd")]
+transform = Transform3D(0.18, 0, 0, 0, 0.18, 0, 0, 0, 0.18, -68.71122, 41.714497, -80.06385)
+
+[node name="race_flag2" parent="Control/HBoxContainer/SubViewportContainer/SubViewport" unique_id=1795396319 instance=ExtResource("2_7mycd")]
+transform = Transform3D(0.18, 0, 0, 0, 0.18, 0, 0, 0, 0.18, -68.71122, 41.714497, -92.63774)
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/HBoxContainer" unique_id=1858601546]
 layout_mode = 2
@@ -60,10 +68,11 @@ size = Vector2i(158, 240)
 render_target_update_mode = 4
 
 [node name="Seal2" parent="Control/HBoxContainer/SubViewportContainer2/SubViewport" unique_id=1987406193 instance=ExtResource("1_0xm2m")]
-transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 152.06741, 59.113186, 58.134693)
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, -73, 40, -80.057915)
 player = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=2087712642]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,19 +96,49 @@ theme_override_font_sizes/font_size = 46
 text = "Player 1 Wins"
 horizontal_alignment = 1
 
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=1748347105]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 25
+script = ExtResource("3_lquwl")
+
+[node name="Timer" type="Timer" parent="Control/MarginContainer" unique_id=290103818]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer" unique_id=574081213]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/HBoxContainer2" unique_id=1005028815]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "3"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Control/MarginContainer/HBoxContainer2" unique_id=317943894]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "3"
+horizontal_alignment = 1
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2049377742]
 environment = SubResource("Environment_1bvp3")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2051674146]
-transform = Transform3D(-0.8660254, -0.43301278, 0.24999999, 0.47280344, -0.87186104, 0.12773117, 0.16265604, 0.22881931, 0.9597837, 0, 0, 0)
-light_energy = 0.6
-shadow_enabled = true
-shadow_opacity = 0.54
-
 [node name="Node3D" type="Node3D" parent="." unique_id=873933721]
 
-[node name="level" parent="Node3D" unique_id=1652248196 instance=ExtResource("3_h2yge")]
+[node name="race_flag" parent="Node3D" unique_id=369719039 instance=ExtResource("3_1bvp3")]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -15.6746855, -0.6029892, 0.09847903)
+
+[node name="level-01" parent="Node3D" unique_id=930051663 instance=ExtResource("4_1bvp3")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
-[node name="race_flag" parent="Node3D" unique_id=1738084618 instance=ExtResource("3_1bvp3")]
-transform = Transform3D(0.07374576, 0, 0.06753934, 0, 0.1, 0, -0.06753934, 0, 0.07374576, -22.74632, -0.6029892, 1.3957207)
+[connection signal="timeout" from="Control/MarginContainer/Timer" to="Control/MarginContainer" method="_on_timer_timeout"]

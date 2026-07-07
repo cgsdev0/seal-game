@@ -13,6 +13,10 @@ script = ExtResource("1_or4ip")
 [node name="Seal" parent="." unique_id=1823385754 instance=ExtResource("2_mngyh")]
 transform = Transform3D(-8.742277e-10, 0, 0.019999998, 0, 0.02, 0, -0.019999998, 0, -8.742277e-10, 0, 0, 0)
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Seal" unique_id=1678739867]
+transform = Transform3D(18.796167, 32.093098, -33.417614, -5.014463, 37.260044, 32.962772, 46.06039, -9.04005, 17.225512, -178.72034, 138.32935, 1.4622369)
+light_energy = 0.703
+
 [node name="Front" type="RayCast3D" parent="." unique_id=456574086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5200043, 0.75, 0)
 target_position = Vector3(0, -5, 0)

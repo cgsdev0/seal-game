@@ -2,7 +2,9 @@
 
 [resource]
 resource_name = "lambert2SG"
+diffuse_mode = 3
 albedo_color = Color(0.61135894, 0.6113601, 0.61135894, 1)
+roughness = 0.0
 emission_enabled = true
 texture_filter = 2
 metadata/_gltf_primary_texture_coord = 0

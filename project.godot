@@ -29,8 +29,9 @@ settings/addon_root_folder="res://addons/debug_draw_3d-1.7.3/addons/debug_draw_3
 
 window/size/viewport_width=320
 window/size/viewport_height=240
-window/size/window_width_override=960
-window/size/window_height_override=720
+window/size/window_width_override=1920
+window/size/window_height_override=1440
+window/stretch/mode="viewport"
 
 [editor_plugins]
 
