@@ -31,7 +31,7 @@ curve = SubResource("Curve_or4ip")
 emission_shape = 3
 emission_box_extents = Vector3(0.2, 0, 0)
 direction = Vector3(0, 1, 1)
-spread = 8.641
+spread = 8.6
 initial_velocity_min = 2.0
 initial_velocity_max = 4.0
 gravity = Vector3(0, -5, 0)
@@ -112,7 +112,6 @@ shape = SubResource("CapsuleShape3D_aw8xe")
 
 [node name="RightParticles" type="GPUParticles3D" parent="." unique_id=164697020]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48953107, -0.31012836, 0.3374564)
-emitting = false
 amount = 30
 lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_53b3i")
@@ -120,7 +119,6 @@ draw_pass_1 = SubResource("SphereMesh_oa3xx")
 
 [node name="LeftParticles" type="GPUParticles3D" parent="." unique_id=172734806]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0.49, -0.31, -0.337)
-emitting = false
 amount = 30
 lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_53b3i")
@@ -153,18 +151,14 @@ one_shot = true
 [node name="LeftLand" type="AudioStreamPlayer" parent="." unique_id=187525296]
 stream = SubResource("AudioStreamRandomizer_53b3i")
 volume_db = 10.0
-bus = &"Left"
 
 [node name="RightLand" type="AudioStreamPlayer" parent="." unique_id=1119545902]
 stream = SubResource("AudioStreamRandomizer_53b3i")
 volume_db = 5.0
-bus = &"Right"
 
 [node name="LeftJump" type="AudioStreamPlayer" parent="." unique_id=647484799]
 stream = SubResource("AudioStreamRandomizer_oa3xx")
 volume_db = 10.0
-bus = &"Left"
 
 [node name="RightJump" type="AudioStreamPlayer" parent="." unique_id=1312492298]
 stream = SubResource("AudioStreamRandomizer_oa3xx")
-bus = &"Right"

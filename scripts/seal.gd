@@ -6,6 +6,12 @@ var on_ground = false
 var dir = 0
 var started = false
 var jumping = false
+var boost_frame = 0
+var charging = false
+var boost_success = false
+var spinout = false
+var spinout_timer = 0.0
+var spinout_duration = 1.5
 @onready var start_position = global_transform
 
 @export var MAX_SPEED = 10.0
@@ -18,6 +24,12 @@ func _ready():
 	$Seal/Geo_Seal.layers = player
 	$Timer.timeout.connect(show_reset_label)
 	Events.start.connect(_on_start)
+	Events.boost.connect(_on_boost)
+
+	$LeftParticles.amount = 10
+	$RightParticles.amount = 10
+	$LeftParticles.process_material.spread = 50
+	$RightParticles.process_material.spread = 50
 
 func show_reset_label():
 	Events.show_reset_label.emit(player)
@@ -25,10 +37,23 @@ func show_reset_label():
 func hide_reset_label():
 	$Timer.stop()
 	Events.hide_reset_label.emit(player)
-	
+
 func _on_start():
 	started = true
-	velocity = global_basis.x * 3
+
+	velocity = global_basis.x
+	if charging and boost_success:
+		velocity *= 6
+	elif charging:
+		spinout = true
+		velocity *= 1.5
+	else:
+		velocity *= 3
+
+	$LeftParticles.amount = 30
+	$RightParticles.amount = 30
+	$LeftParticles.process_material.spread = 8.6
+	$RightParticles.process_material.spread = 8.6
 
 var JUMP_SPEED = 4.0
 func jump():
@@ -39,21 +64,30 @@ func jump():
 	jumping = true
 	on_ground = false
 	velocity.y = JUMP_SPEED
-	
+
 func _physics_process(delta: float) -> void:
+	if spinout and spinout_timer <= spinout_duration:
+		spinout_timer += delta
+		var t = spinout_timer / spinout_duration
+		$Seal.rotation.y = Tween.interpolate_value(
+			PI / 2, 3 * TAU, t, spinout_duration, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		return
+	else:
+		$Seal.rotation.y = PI / 2
 
 	if Input.is_action_just_pressed("p%d_a" % player) && !jumping && on_ground && started:
 		jump()
-	
+
 	if velocity.y <= 0.0:
 		jumping = false
-		
+
 	if !on_ground && !jumping && $Timer.is_stopped():
 		$Timer.start(2.0)
-		
+
 	$Camera3D.position.x = move_toward(
 		$Camera3D.position.x, lerp(-2.4, -3.6, velocity.length() / MAX_SPEED), delta * 0.25)
 	dir = move_toward(dir, Input.get_axis("p%d_left" % player, "p%d_right" % player), delta * 3)
+
 	$LeftParticles.emitting = dir == 1.0 && velocity.length() > 5.0 && on_ground || !started
 	$RightParticles.emitting = dir == -1.0 && velocity.length() > 5.0 && on_ground || !started
 	$Seal.rotation.z = sign(dir) * sqrt(abs(dir)) * 0.5
@@ -138,10 +172,32 @@ func _physics_process(delta: float) -> void:
 
 	global_position += velocity * delta
 
+func _on_boost(frame_number):
+	boost_frame = frame_number
+
 func _input(event):
 	if !started:
-		return
-	if event.is_action_pressed("p%d_b" % player):
+		if event.is_action_pressed("p%d_a" % player):
+			charging = true
+			var curr_frame = Engine.get_frames_drawn()
+			if boost_frame and (curr_frame - boost_frame <= 100):
+				boost_success = true
+
+			$LeftParticles.amount = 50
+			$RightParticles.amount = 50
+			$LeftParticles.process_material.spread = 8.6
+			$RightParticles.process_material.spread = 8.6
+		elif event.is_action_released("p%d_a" % player):
+			charging = false
+			boost_success = false
+
+			$LeftParticles.amount = 10
+			$RightParticles.amount = 10
+			$LeftParticles.process_material.spread = 50
+			$RightParticles.process_material.spread = 50
+
+
+	elif event.is_action_pressed("p%d_b" % player):
 		hide_reset_label()
 		global_transform = start_position
 		_on_start()
