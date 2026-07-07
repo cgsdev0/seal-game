@@ -5,7 +5,7 @@ var gravity = Vector3.DOWN * 4
 var on_ground = false
 var dir = 0
 var started = false
-@onready var start_position = global_position
+@onready var start_position = global_transform
 
 @export var MAX_SPEED = 10.0
 @export var STEERING_STRENGTH = 12
@@ -25,6 +25,8 @@ func _on_start():
 
 func _physics_process(delta: float) -> void:
 
+	dir = move_toward(dir, Input.get_axis("p%d_left" % player, "p%d_right" % player), delta * 3)
+	$Seal.rotation.z = dir * 0.5
 
 	var front = $Front.target_position.length()
 	var normal = []
@@ -79,7 +81,7 @@ func _physics_process(delta: float) -> void:
 		velocity += down * delta * 1.5
 		DebugDraw3D.draw_arrow(global_position, global_position + down, Color.BLUE, 0.1)
 
-	dir = move_toward(dir, Input.get_axis("p%d_left" % player, "p%d_right" % player), delta * 2)
+
 	velocity += global_basis.z * dir * delta * STEERING_STRENGTH * 0.1 * velocity.length()
 
 	velocity = velocity.limit_length(MAX_SPEED)
@@ -95,5 +97,6 @@ func _physics_process(delta: float) -> void:
 
 func _input(event):
 	if event.is_action_pressed("p%d_b" % player):
-		global_position = start_position
-		velocity = Vector3.ZERO
+		if started:
+			global_transform = start_position
+			_on_start()
