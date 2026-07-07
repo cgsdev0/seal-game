@@ -1,8 +1,8 @@
 {
   "$schema": "https://rcade.dev/manifest.schema.json",
   "name": "seal-game",
-  "display_name": "Grendel The Seal",
-  "description": "optional",
+  "display_name": "Seal-mobile",
+  "description": "it's two seals on a slide racing. Music is Brightly Fancy by Kevin Macleod",
   "visibility": "public",
   "authors": [
     {
