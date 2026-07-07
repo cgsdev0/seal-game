@@ -10,7 +10,7 @@ func on_winner(area):
 		return
 
 	show()
-	$Label.text = "Player " + str(area.get_parent().player) + " wins!"
+	$Label.text = "Player " + str(area.get_parent().player) + " Wins!"
 
 func _input(event):
 	if event.is_action_pressed("one_player") || event.is_action_pressed("two_player"):

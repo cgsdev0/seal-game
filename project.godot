@@ -16,6 +16,10 @@ run/main_scene="uid://cqow47bch5ocs"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://bwkldekcxgu3b"
+
 [autoload]
 
 RCadeInput="*uid://ci44fyk4upc0u"

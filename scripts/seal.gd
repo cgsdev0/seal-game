@@ -5,6 +5,7 @@ var gravity = Vector3.DOWN * 4
 var on_ground = false
 var dir = 0
 var started = false
+var jumping = false
 @onready var start_position = global_transform
 
 @export var MAX_SPEED = 10.0
@@ -15,21 +16,46 @@ func _ready():
 	$Seal/DirectionalLight3D.layers = player
 	$Seal/DirectionalLight3D.light_cull_mask = player
 	$Seal/Geo_Seal.layers = player
-
+	$Timer.timeout.connect(show_reset_label)
 	Events.start.connect(_on_start)
 
+func show_reset_label():
+	Events.show_reset_label.emit(player)
 
+func hide_reset_label():
+	$Timer.stop()
+	Events.hide_reset_label.emit(player)
+	
 func _on_start():
 	started = true
 	velocity = global_basis.x * 3
 
+var JUMP_SPEED = 4.0
+func jump():
+	if player == 1:
+		$LeftJump.play()
+	elif player == 2:
+		$RightJump.play()
+	jumping = true
+	on_ground = false
+	velocity.y = JUMP_SPEED
+	
 func _physics_process(delta: float) -> void:
 
+	if Input.is_action_just_pressed("p%d_a" % player) && !jumping && on_ground && started:
+		jump()
+	
+	if velocity.y <= 0.0:
+		jumping = false
+		
+	if !on_ground && !jumping && $Timer.is_stopped():
+		$Timer.start(2.0)
+		
 	$Camera3D.position.x = move_toward(
 		$Camera3D.position.x, lerp(-2.4, -3.6, velocity.length() / MAX_SPEED), delta * 0.25)
 	dir = move_toward(dir, Input.get_axis("p%d_left" % player, "p%d_right" % player), delta * 3)
-	$LeftParticles.emitting = dir == 1.0 && velocity.length() > 5.0 && on_ground
-	$RightParticles.emitting = dir == -1.0 && velocity.length() > 5.0 && on_ground
+	$LeftParticles.emitting = dir == 1.0 && velocity.length() > 5.0 && on_ground || !started
+	$RightParticles.emitting = dir == -1.0 && velocity.length() > 5.0 && on_ground || !started
 	$Seal.rotation.z = sign(dir) * sqrt(abs(dir)) * 0.5
 
 	var front = $Front.target_position.length()
@@ -53,7 +79,15 @@ func _physics_process(delta: float) -> void:
 			else:
 				global_position.y -= back_offset
 				velocity.y = -back_offset
-		elif abs(front_offset) < 0.1 || abs(back_offset) < 0.1:
+		elif (abs(front_offset) < 0.1 || abs(back_offset) < 0.1) && !jumping:
+			if !on_ground:
+				$RightParticles2.emitting = true
+				$LeftParticles2.emitting = true
+				if player == 1:
+					$LeftLand.play()
+				elif player == 2:
+					$RightLand.play()
+				hide_reset_label()
 			on_ground = true
 		else:
 			velocity += gravity * delta
@@ -67,7 +101,10 @@ func _physics_process(delta: float) -> void:
 
 		var angle = atan(h / a)
 		$Seal.rotation.x = lerp_angle($Seal.rotation.x, angle, 0.5) + 0.1
-
+	elif jumping && !on_ground:
+		# var angle = -global_basis.x.normalized().angle_to(velocity.normalized()) + 0.3
+		var angle = lerp(-PI / 4.0, PI / 2.5, remap(velocity.y, JUMP_SPEED, -JUMP_SPEED, 0.0, 1.0))
+		$Seal.rotation.x = lerp_angle($Seal.rotation.x, angle, 0.5) + 0.1
 	if !started:
 		global_position += velocity * delta
 		return
@@ -102,7 +139,9 @@ func _physics_process(delta: float) -> void:
 	global_position += velocity * delta
 
 func _input(event):
+	if !started:
+		return
 	if event.is_action_pressed("p%d_b" % player):
-		if started:
-			global_transform = start_position
-			_on_start()
+		hide_reset_label()
+		global_transform = start_position
+		_on_start()

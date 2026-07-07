@@ -2,6 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bp5cnnvtjnker" path="res://scripts/seal.gd" id="1_or4ip"]
 [ext_resource type="PackedScene" uid="uid://crg0o4r8qpmni" path="res://models/Seal.glb" id="2_mngyh"]
+[ext_resource type="AudioStream" uid="uid://b2pkjh13webo8" path="res://sounds/jump1.wav" id="3_l7uaq"]
+[ext_resource type="AudioStream" uid="uid://cvynccornodgi" path="res://sounds/land1.wav" id="3_ng0mj"]
+[ext_resource type="AudioStream" uid="uid://bah33vpc803gy" path="res://sounds/land2.wav" id="4_7hcuo"]
+[ext_resource type="AudioStream" uid="uid://doudt8tftc4tk" path="res://sounds/jump2.wav" id="4_ysd6k"]
+[ext_resource type="AudioStream" uid="uid://qyuseyuwkd8r" path="res://sounds/jump3.wav" id="5_ng0mj"]
+[ext_resource type="AudioStream" uid="uid://b6a7q50k7sjqq" path="res://sounds/jump4.wav" id="6_7hcuo"]
+[ext_resource type="AudioStream" uid="uid://c25m52wpoxnyy" path="res://sounds/jump5.wav" id="7_6nenw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aw8xe"]
 height = 2.4978027
@@ -46,6 +53,35 @@ height = 0.1
 radial_segments = 8
 rings = 8
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ng0mj"]
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0, 0)
+direction = Vector3(0, 1, 1)
+spread = 8.641
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+gravity = Vector3(0, -5, 0)
+use_scale_3d = true
+scale_3d_min = Vector3(1, 1, 1)
+scale_3d_max = Vector3(2, 2, 2)
+scale_curve = SubResource("CurveTexture_l04hv")
+color_initial_ramp = SubResource("GradientTexture1D_or4ip")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_53b3i"]
+random_pitch = 1.0594631
+streams_count = 2
+stream_0/stream = ExtResource("3_ng0mj")
+stream_1/stream = ExtResource("4_7hcuo")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oa3xx"]
+random_pitch = 1.005793
+streams_count = 5
+stream_0/stream = ExtResource("3_l7uaq")
+stream_1/stream = ExtResource("4_ysd6k")
+stream_2/stream = ExtResource("5_ng0mj")
+stream_3/stream = ExtResource("6_7hcuo")
+stream_4/stream = ExtResource("7_6nenw")
+
 [node name="Seal" type="Node3D" unique_id=1566451631]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 script = ExtResource("1_or4ip")
@@ -76,6 +112,7 @@ shape = SubResource("CapsuleShape3D_aw8xe")
 
 [node name="RightParticles" type="GPUParticles3D" parent="." unique_id=164697020]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48953107, -0.31012836, 0.3374564)
+emitting = false
 amount = 30
 lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_53b3i")
@@ -83,7 +120,51 @@ draw_pass_1 = SubResource("SphereMesh_oa3xx")
 
 [node name="LeftParticles" type="GPUParticles3D" parent="." unique_id=172734806]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0.49, -0.31, -0.337)
+emitting = false
 amount = 30
 lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_53b3i")
 draw_pass_1 = SubResource("SphereMesh_oa3xx")
+
+[node name="RightParticles2" type="GPUParticles3D" parent="." unique_id=140540494]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48953107, -0.31012836, 0.3374564)
+emitting = false
+amount = 30
+lifetime = 0.4
+one_shot = true
+explosiveness = 0.79
+process_material = SubResource("ParticleProcessMaterial_ng0mj")
+draw_pass_1 = SubResource("SphereMesh_oa3xx")
+
+[node name="LeftParticles2" type="GPUParticles3D" parent="." unique_id=1235200289]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0.49, -0.31, -0.337)
+emitting = false
+amount = 30
+lifetime = 0.4
+one_shot = true
+explosiveness = 0.79
+process_material = SubResource("ParticleProcessMaterial_ng0mj")
+draw_pass_1 = SubResource("SphereMesh_oa3xx")
+
+[node name="Timer" type="Timer" parent="." unique_id=1452214071]
+wait_time = 2.0
+one_shot = true
+
+[node name="LeftLand" type="AudioStreamPlayer" parent="." unique_id=187525296]
+stream = SubResource("AudioStreamRandomizer_53b3i")
+volume_db = 10.0
+bus = &"Left"
+
+[node name="RightLand" type="AudioStreamPlayer" parent="." unique_id=1119545902]
+stream = SubResource("AudioStreamRandomizer_53b3i")
+volume_db = 5.0
+bus = &"Right"
+
+[node name="LeftJump" type="AudioStreamPlayer" parent="." unique_id=647484799]
+stream = SubResource("AudioStreamRandomizer_oa3xx")
+volume_db = 10.0
+bus = &"Left"
+
+[node name="RightJump" type="AudioStreamPlayer" parent="." unique_id=1312492298]
+stream = SubResource("AudioStreamRandomizer_oa3xx")
+bus = &"Right"

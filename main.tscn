@@ -1,11 +1,19 @@
 [gd_scene format=3 uid="uid://cqow47bch5ocs"]
 
 [ext_resource type="PackedScene" uid="uid://xr5m8s3nyain" path="res://seal.tscn" id="1_0xm2m"]
+[ext_resource type="FontFile" uid="uid://un87cjl72ty1" path="res://fonts/m5x7.ttf" id="1_5vw27"]
 [ext_resource type="Script" uid="uid://e6275iwwjmhq" path="res://game_over.gd" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bykeeoqlcbuuw" path="res://models/race_flag.glb" id="2_7mycd"]
 [ext_resource type="PackedScene" uid="uid://clsdfvwnpexxq" path="res://race_flag.tscn" id="3_1bvp3"]
 [ext_resource type="Script" uid="uid://dfjjgm18av15l" path="res://countdown.gd" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://uf3mvlvcb4aq" path="res://level_01.tscn" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://hnydugsta8wq" path="res://scripts/reset_label.gd" id="5_272bh"]
+[ext_resource type="AudioStream" uid="uid://e31akmumgrcu" path="res://sounds/beep.wav" id="6_4c57u"]
+[ext_resource type="AudioStream" uid="uid://cxxsh2qvpddq3" path="res://sounds/boop.wav" id="7_efxa6"]
+[ext_resource type="AudioStream" uid="uid://bu5uofaik6j6c" path="res://sounds/brightly_fancy.mp3" id="8_efxa6"]
+
+[sub_resource type="Theme" id="Theme_or4ip"]
+default_font = ExtResource("1_5vw27")
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -29,6 +37,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_or4ip")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1090674158]
 layout_mode = 1
@@ -72,7 +81,6 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, -73, 40, -80.
 player = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=2087712642]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,8 +100,8 @@ offset_top = -44.0
 offset_bottom = 44.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 46
-text = "Player 1 Wins"
+theme_override_font_sizes/font_size = 64
+text = "Player 1 Wins!"
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=1748347105]
@@ -107,8 +115,6 @@ theme_override_constants/margin_top = 25
 script = ExtResource("3_lquwl")
 
 [node name="Timer" type="Timer" parent="Control/MarginContainer" unique_id=290103818]
-wait_time = 3.0
-one_shot = true
 autostart = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer" unique_id=574081213]
@@ -118,7 +124,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
 text = "3"
 horizontal_alignment = 1
 
@@ -126,9 +132,50 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
 text = "3"
 horizontal_alignment = 1
+
+[node name="Beep" type="AudioStreamPlayer" parent="Control/MarginContainer" unique_id=1097322655]
+stream = ExtResource("6_4c57u")
+
+[node name="Boop" type="AudioStreamPlayer" parent="Control/MarginContainer" unique_id=566302540]
+stream = ExtResource("7_efxa6")
+
+[node name="Music" type="AudioStreamPlayer" parent="Control/MarginContainer" unique_id=1248980012]
+stream = ExtResource("8_efxa6")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control" unique_id=1310518142]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 25
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer2" unique_id=457429853]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer2/HBoxContainer2" unique_id=1024568162]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Press B
+to Reset"
+horizontal_alignment = 1
+script = ExtResource("5_272bh")
+
+[node name="Label2" type="Label" parent="Control/MarginContainer2/HBoxContainer2" unique_id=1243088115]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Press B
+to Reset"
+horizontal_alignment = 1
+script = ExtResource("5_272bh")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2049377742]
 environment = SubResource("Environment_1bvp3")
