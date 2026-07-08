@@ -7,7 +7,6 @@ func _ready():
 	$Music.play()
 	await get_tree().process_frame
 	$Music.stop()
-	$Music.seek(0.0)
 
 	hide()
 
