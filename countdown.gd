@@ -3,9 +3,12 @@ extends MarginContainer
 var number = 4
 var boost_frame = 0
 
-var music = preload("res://sounds/brightly_fancy.mp3")
-
 func _ready():
+	$Music.play()
+	await get_tree().process_frame
+	$Music.stop()
+	$Music.seek(0.0)
+
 	hide()
 
 func _on_timer_timeout():

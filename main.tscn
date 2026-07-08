@@ -10,7 +10,6 @@
 [ext_resource type="Script" uid="uid://hnydugsta8wq" path="res://scripts/reset_label.gd" id="5_272bh"]
 [ext_resource type="AudioStream" uid="uid://e31akmumgrcu" path="res://sounds/beep.wav" id="6_4c57u"]
 [ext_resource type="AudioStream" uid="uid://cxxsh2qvpddq3" path="res://sounds/boop.wav" id="7_efxa6"]
-[ext_resource type="AudioStream" uid="uid://bu5uofaik6j6c" path="res://sounds/brightly_fancy.mp3" id="8_efxa6"]
 
 [sub_resource type="Theme" id="Theme_or4ip"]
 default_font = ExtResource("1_5vw27")
@@ -119,7 +118,6 @@ stream = ExtResource("6_4c57u")
 stream = ExtResource("7_efxa6")
 
 [node name="Music" type="AudioStreamPlayer" parent="Control/MarginContainer" unique_id=1248980012]
-stream = ExtResource("8_efxa6")
 
 [node name="MarginContainer2" type="MarginContainer" parent="Control" unique_id=1310518142]
 layout_mode = 1
