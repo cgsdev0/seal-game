@@ -44,6 +44,8 @@ func _on_start():
 	velocity = global_basis.x
 	if charging and boost_success:
 		velocity *= 6
+		$BoostParticles.emitting = true
+		$BoostParticles2.emitting = true
 	elif charging:
 		spinout = true
 		velocity *= 1.5

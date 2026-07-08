@@ -1,0 +1,24 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://bsnjbtv7hffka"]
+
+[ext_resource type="Texture2D" uid="uid://pj85slld06js" path="res://boost_particles_color.tres" id="1_ib8g8"]
+
+[sub_resource type="Curve" id="Curve_or4ip"]
+_data = [Vector2(0, 0.32636774), 0.0, 0.0, 0, 0, Vector2(0.5104386, 0.90843254), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_l04hv"]
+curve = SubResource("Curve_or4ip")
+
+[resource]
+emission_shape = 3
+emission_box_extents = Vector3(0.2, 0, 0)
+direction = Vector3(-1, 0.5, 0.2)
+spread = 8.6
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+gravity = Vector3(0, -5, 0)
+use_scale_3d = true
+scale_3d_min = Vector3(1, 1, 1)
+scale_3d_max = Vector3(2, 2, 2)
+scale_curve = SubResource("CurveTexture_l04hv")
+color_initial_ramp = ExtResource("1_ib8g8")
