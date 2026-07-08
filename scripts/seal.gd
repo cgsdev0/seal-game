@@ -52,6 +52,9 @@ func _on_start():
 	else:
 		velocity *= 3
 
+	charging = false
+	boost_success = false
+
 	$LeftParticles.amount = 30
 	$RightParticles.amount = 30
 	$LeftParticles.process_material.spread = 8.6
@@ -182,7 +185,7 @@ func _input(event):
 		if event.is_action_pressed("p%d_a" % player):
 			charging = true
 			var curr_frame = Engine.get_frames_drawn()
-			if boost_frame and (curr_frame - boost_frame <= 100):
+			if boost_frame and (curr_frame - boost_frame <= Engine.get_frames_per_second() * 0.25):
 				boost_success = true
 
 			$LeftParticles.amount = 50
